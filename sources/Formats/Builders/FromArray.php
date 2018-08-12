@@ -2,6 +2,7 @@
 namespace Ciebit\Ads\Formats\Builders;
 
 use Ciebit\Ads\Formats\Format;
+use Ciebit\Ads\Formats\Status;
 use Ciebit\Ads\Formats\Builders\Builder;
 
 class FromArray implements Builder
@@ -23,7 +24,7 @@ class FromArray implements Builder
 
         isset($this->data['id'])
         && is_numeric($this->data['id'])
-        && $format->setId((int) $format_data['id']);
+        && $format->setId((int) $this->data['id']);
 
         return $format;
     }

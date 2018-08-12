@@ -19,11 +19,11 @@
     "autoload": {
         "psr-4":{
             "Ciebit\\Ads\\": "sources/"
-        },
+        }
     },
     "autoload-dev": {
         "psr-4":{
-            "Ciebit\\Ads\\Test\\": "tests/"
+            "Ciebit\\Ads\\Tests\\": "tests/classes/"
         }
     },
     "require": {

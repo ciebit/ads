@@ -35,7 +35,7 @@ class Format
         return $this->name;
     }
 
-    public function getStatus(): int
+    public function getStatus(): Status
     {
         return $this->status;
     }
