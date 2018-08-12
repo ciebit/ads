@@ -1,0 +1,37 @@
+{
+    "name": "ciebit/ads",
+    "description": "Módulo de gerenciamento de banners publicitários",
+    "keywords": ["ads", "publicidade", "banners"],
+    "type": "library",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/ciebit/ads/issues",
+        "source": "https://github.com/ciebit/ads"
+    },
+    "authors": [
+        {
+            "name": "Johnny Saymon",
+            "email": "saymon@ciebit.com",
+            "homepage": "http://saymon.ciebit.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4":{
+            "Ciebit\\Ads\\": "sources/"
+        },
+    },
+    "autoload-dev": {
+        "psr-4":{
+            "Ciebit\\Ads\\Test\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.1",
+        "ciebit/files": "^0.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.4",
+        "phpunit/dbunit": "^3.0"
+    }
+}
