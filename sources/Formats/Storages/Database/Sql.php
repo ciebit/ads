@@ -18,7 +18,7 @@ class Sql extends SqlHelper implements Storage
     public function __construct(pdo $pdo)
     {
         $this->pdo = $pdo;
-        $this->table = 'cb_ads-formats';
+        $this->table = 'cb_ads_formats';
     }
 
     public function addFilterById(int $id, string $operator = '='): Storage
@@ -47,7 +47,7 @@ class Sql extends SqlHelper implements Storage
         return $this;
     }
 
-    public function delete(Format $format): self
+    public function delete(Format $format): Storage
     {
         $format->setStatus(Status::TRASH());
         $this->update($format);
@@ -55,7 +55,7 @@ class Sql extends SqlHelper implements Storage
         return $this;
     }
 
-    public function destroy(Format $format): self
+    public function destroy(Format $format): Storage
     {
         $statement = $this->pdo->prepare("
             DELETE FROM `{$this->table}`
@@ -127,7 +127,18 @@ class Sql extends SqlHelper implements Storage
         return $collection;
     }
 
-    public function store(Format $format): Store
+    private function getFields(): string
+    {
+        return '
+            `id`,
+            `name`,
+            `width`,
+            `height`,
+            `status`
+        ';
+    }
+
+    public function store(Format $format): Storage
     {
         $statement = $this->pdo->prepare(
             "INSERT INTO `{$this->table}` (
@@ -154,7 +165,7 @@ class Sql extends SqlHelper implements Storage
         return $this;
     }
 
-    public function update(Format $format): self
+    public function update(Format $format): Storage
     {
         $Connection = $this->Connection->conectar();
 

@@ -6,7 +6,7 @@ use Ciebit\Ads\Formats\Format;
 use Ciebit\Ads\Formats\Status;
 use PHPUnit\Framework\TestCase;
 
-class FormatCreateTest extends TestCase
+class CreateTest extends TestCase
 {
     public function getDefault()
     {
