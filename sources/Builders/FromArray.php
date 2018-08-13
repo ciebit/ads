@@ -15,14 +15,13 @@ class FromArray implements Builder
     public function build(): Ad
     {
         if ($this->isDataValid() == false) {
-            var_dump($this->data);
             throw new Exception('ciebit.ads.builders.fromarray.data-invalid', 1);
         }
 
         $ad = new Ad(
             $this->data['name'],
             $this->data['banners'],
-            new Status($this->data['status'])
+            new Status((int) $this->data['status'])
         );
 
         isset($this->data['date_end'])

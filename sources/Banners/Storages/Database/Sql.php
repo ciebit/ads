@@ -22,6 +22,7 @@ class Sql extends SqlHelper implements Storage
     private $formatStorage; #: FormatStorage
     private $linkBuilder; #: LinkBuilder
     private $table; #: string
+    private $tableAssociation; #: string
 
     public function __construct(PDO $pdo, FileStorage $file, FormatStorage $format, LinkBuilder $link)
     {
@@ -30,17 +31,20 @@ class Sql extends SqlHelper implements Storage
         $this->linkBuilder = $link;
         $this->pdo = $pdo;
         $this->table = 'cb_ads_banners';
+        $this->tableAssociation = 'cb_ads_association-banners';
     }
 
     public function addFilterByAdId(int $id, string $operator = '='): self
     {
         $key = 'ad_id';
         $aliasAssociation = 'ad_association';
-        $sql = "`{$aliasAssociation}`.`id` $operator :{$key}";
+        $sql = "`{$aliasAssociation}`.`ad_id` $operator :{$key}";
 
         $this
-        ->addUnion('cb_ads_association-banners', $aliasAssociation, parent::UNION_INNER)
-        ->addFilter($key, $sql, PDO::PARAM_INT, $id);
+        ->addSqlUnion(
+            "INNER JOIN `{$this->tableAssociation}` AS `$aliasAssociation`
+            ON `$aliasAssociation`.`banner_id` = `banners`.`id`"
+        )->addFilter($key, $sql, PDO::PARAM_INT, $id);
 
         return $this;
     }
@@ -87,6 +91,7 @@ class Sql extends SqlHelper implements Storage
             "SELECT
             {$this->getFields()}
             FROM `{$this->table}` AS `banners`
+            {$this->generateSqlUnion()}
             WHERE {$this->generateSqlFilters()}
             {$this->generateSqlOrder()}
             LIMIT 0,1"
@@ -120,6 +125,7 @@ class Sql extends SqlHelper implements Storage
             "SELECT
             {$this->getFields()}
             FROM `{$this->table}` AS `banners`
+            {$this->generateSqlUnion()}
             WHERE {$this->generateSqlFilters()}
             {$this->generateSqlOrder()}
             {$this->generateSqlLimit()}"

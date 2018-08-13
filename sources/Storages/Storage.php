@@ -6,6 +6,8 @@ use Ciebit\Ads\Collection;
 
 interface Storage
 {
+    public function addFilterById(int $id, string $operator): self;
+
     public function delete(Ad $Ad): self;
 
     public function destroy(Ad $Ad): self;

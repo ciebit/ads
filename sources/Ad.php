@@ -26,7 +26,7 @@ class Ad
 
     public function getBanners(): Collection
     {
-        return $this->Banners;
+        return $this->banners;
     }
 
     public function getDateEnd(): DateTime

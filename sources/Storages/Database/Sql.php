@@ -6,10 +6,12 @@ use Ciebit\Ads\Collection;
 use Ciebit\Ads\Status;
 use Ciebit\Ads\Banners\Storages\Storage as BannersStorage;
 use Ciebit\Ads\Builders\FromArray as BuilderFromArray;
+use Ciebit\Ads\Storages\Database\SqlHelper;
+use Ciebit\Ads\Storages\Storage;
 use Exception;
 use PDO;
 
-class Sql
+class Sql extends SqlHelper implements Storage
 {
     private $bannerStorage; #: BannersStorage
     private $pdo; #: pdo
@@ -19,10 +21,10 @@ class Sql
     {
         $this->bannerStorage = $banner;
         $this->pdo = $pdo;
-        $this->table = 'cb-ad';
+        $this->table = 'cb_ads';
     }
 
-    public function addFilterById(int $id, string $operation = '='): self
+    public function addFilterById(int $id, string $operator = '='): Storage
     {
         $key = 'id';
         $sql = "`id` $operator :{$key}";
@@ -31,7 +33,7 @@ class Sql
         return $this;
     }
 
-    public function delete(Ad $ad): self
+    public function delete(Ad $ad): Storage
     {
         $ad->setStatus(Status::TRASH());
         $this->update($ad);
@@ -39,7 +41,7 @@ class Sql
         return $this;
     }
 
-    public function destroy(Ad $ad): self
+    public function destroy(Ad $ad): Storage
     {
         $statement = $this->pdo->prepare(
             'DELETE FROM `{$this->table}`
@@ -92,14 +94,14 @@ class Sql
 
         $data = $statement->fetch(PDO::FETCH_ASSOC);
 
-        $bannersStorage = clone $bannerStorage;
+        $bannersStorage = clone $this->bannerStorage;
         $bannersStorage->addFilterByAdId($data['id']);
         $data['banners'] = $bannersStorage->getAll();
 
         return (new BuilderFromArray)->setData($data)->build();
     }
 
-    public function getAll(): AdCollection
+    public function getAll(): Collection
     {
         $statement = $this->pdo->prepare(
             "SELECT
@@ -127,7 +129,7 @@ class Sql
         return $this;
     }
 
-    public function store(Ad $Ad): self
+    public function store(Ad $Ad): Storage
     {
         $Connection = $this->Connection->conectar();
 
@@ -155,7 +157,7 @@ class Sql
         return $this;
     }
 
-    public function update(Ad $Ad): self
+    public function update(Ad $Ad): Storage
     {
         $Connection = $this->Connection->conectar();
 
