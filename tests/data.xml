@@ -1,70 +1,72 @@
 <?xml version="1.0" ?>
 <dataset>
-    <table name="0201_arquivos">
+    <table name="cb_files">
         <column>id</column>
-        <column>conta_id</column>
-        <column>chave_id</column>
-        <column>nome</column>
-        <column>legenda</column>
-        <column>descricao</column>
+        <column>name</column>
+        <column>description</column>
         <column>uri</column>
-        <column>extensao</column>
-        <column>endereco_id</column>
-        <column>largura</column>
-        <column>altura</column>
-        <column>tamanho</column>
-        <column>visualizacoes</column>
-        <column>etiquetas</column>
-        <column>autor_id</column>
-        <column>tipo</column>
-        <column>datahora</column>
-        <column>variacoes</column>
-        <column>situacao</column>
+        <column>extension</column>
+        <column>size</column>
+        <column>views</column>
+        <column>mimetype</column>
+        <column>date_hour</column>
+        <column>metadata</column>
+        <column>status</column>
         <row>
             <value>1</value>
-            <value>1</value>
-            <value>1</value>
-            <value>Imagem 01</value>
-            <value>Imagem de teste</value>
-            <value>Imagem com texto teste</value>
-            <value>imagem-01.jpg</value>
+            <value>Title File 1</value>
+            <value>Descrição 1</value>
+            <value>title-file-1.jpg</value>
             <value>jpg</value>
+            <value>10</value>
             <value>0</value>
-            <value>600</value>
-            <value>400</value>
-            <value>3000</value>
-            <value>0</value>
-            <value>imagem, teste, exemplo</value>
-            <value>0</value>
-            <value>imagem</value>
-            <value>2017-01-01 07:00:00</value>
-            <value>{}</value>
+            <value>image/jpeg</value>
+            <value>2018-05-26</value>
+            <value>{"width": 600, "height": 150}</value>
             <value>1</value>
         </row>
         <row>
             <value>2</value>
-            <value>1</value>
-            <value>1</value>
-            <value>Imagem 02</value>
-            <value>Imagem de teste 02</value>
-            <value>Imagem com texto teste 02</value>
-            <value>imagem-02.jpg</value>
+            <value>Title File 2</value>
+            <value>Descrição 2</value>
+            <value>title-file-2.jpg</value>
             <value>jpg</value>
-            <value>0</value>
-            <value>300</value>
-            <value>300</value>
-            <value>1000</value>
-            <value>0</value>
-            <value>imagem, teste, exemplo</value>
-            <value>0</value>
-            <value>imagem</value>
-            <value>2017-11-28 13:10:00</value>
+            <value>20</value>
+            <value>1205</value>
+            <value>image/jpeg</value>
+            <value>2017-10-15</value>
+            <value>{"width": 900, "height": 500}</value>
+            <value>2</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>Title File 3</value>
+            <value>Descrição 3</value>
+            <value>title-file-3.jpg</value>
+            <value>jpg</value>
+            <value>30</value>
+            <value>100000</value>
+            <value>image/jpeg</value>
+            <value>2017-08-11</value>
+            <value>{"width": 130, "height": 50}</value>
+            <value>3</value>
+        </row>
+        <row>
+            <value>4</value>
+            <value>Title File 4</value>
+            <value>Descrição 4</value>
+            <value>title-file-4.jpg</value>
+            <value>jpg</value>
+            <value>40</value>
+            <value>5058</value>
+            <value>application/json</value>
+            <value>2017-01-19</value>
             <value>{}</value>
-            <value>1</value>
+            <value>4</value>
         </row>
     </table>
 
-    <table name="cb-ad">
+    <table name="cb_ads">
         <column>id</column>
         <column>name</column>
         <column>date_start</column>
@@ -79,7 +81,7 @@
         </row>
     </table>
 
-    <table name="cb-ad_formats">
+    <table name="cb_ads_formats">
         <column>id</column>
         <column>name</column>
         <column>width</column>
@@ -101,9 +103,8 @@
         </row>
     </table>
 
-    <table name="cb-ad_banners">
+    <table name="cb_ads_banners">
         <column>id</column>
-        <column>ad_id</column>
         <column>file_id</column>
         <column>format_id</column>
         <column>link</column>
@@ -116,7 +117,6 @@
             <value>1</value>
             <value>1</value>
             <value>1</value>
-            <value>1</value>
             <value>http://ciebit.com.br</value>
             <value>_blank</value>
             <value>0</value>
@@ -126,7 +126,6 @@
         </row>
         <row>
             <value>2</value>
-            <value>1</value>
             <value>2</value>
             <value>2</value>
             <value>http://ciebit.com.br</value>
