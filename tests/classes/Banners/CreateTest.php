@@ -6,11 +6,11 @@ use Ciebit\Ads\Banners\Status;
 use Ciebit\Ads\Banners\Builders\FromArray as BuilderFromArray;
 use Ciebit\Ads\Formats\Format;
 use Ciebit\Ads\Formats\Status as FormatStatus;
+use Ciebit\Ads\Links\Link;
 use Ciebit\Files\Images\Image;
 use Ciebit\Files\Status as FileStatus;
-use DateTime;
-use Fig\Link\Link;
 use PHPUnit\Framework\TestCase;
+use DateTime;
 
 class CreateTest extends TestCase
 {
@@ -22,7 +22,7 @@ class CreateTest extends TestCase
     {
         $this->file = new Image('Image 01', 'image/jpg', 'teste.jpg', 400, 300, FileStatus::ACTIVE());
         $this->format = new Format('Format 01', 400, 300, FormatStatus::ACTIVE());
-        $this->link = new Link('Example Link', '/link/');
+        $this->link = (new Link('/link/'))->setTarget('_blank');
     }
 
     public function testCreateFromManual()

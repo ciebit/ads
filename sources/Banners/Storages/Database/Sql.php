@@ -6,6 +6,7 @@ use Ciebit\Ads\Banners\Collection;
 use Ciebit\Ads\Banners\Builders\FromArray as BuilderFromArray;
 use Ciebit\Ads\Banners\Storages\Storage;
 use Ciebit\Ads\Formats\Storages\Storage as FormatStorage;
+use Ciebit\Ads\Links\Builders\Builder as LinkBuilder;
 use Ciebit\Ads\Storages\Database\SqlHelper;
 use Ciebit\Files\Storages\Storage as FileStorage;
 use Exception;
@@ -19,14 +20,16 @@ class Sql extends SqlHelper implements Storage
     private $pdo; #: PDO
     private $fileStorage; #: FileStorage
     private $formatStorage; #: FormatStorage
+    private $linkBuilder; #: LinkBuilder
     private $table; #: string
 
-    public function __construct(PDO $pdo, FileStorage $file, FormatStorage $format)
+    public function __construct(PDO $pdo, FileStorage $file, FormatStorage $format, LinkBuilder $link)
     {
         $this->fileStorage = $file;
         $this->formatStorage = $format;
+        $this->linkBuilder = $link;
         $this->pdo = $pdo;
-        $this->table = 'cb-ads_banners';
+        $this->table = 'cb_ads_banners';
     }
 
     public function addFilterByAdId(int $id, string $operator = '='): self
@@ -36,7 +39,7 @@ class Sql extends SqlHelper implements Storage
         $sql = "`{$aliasAssociation}`.`id` $operator :{$key}";
 
         $this
-        ->addUnion('cb-ads_association-banners', $aliasAssociation, parent::UNION_INNER)
+        ->addUnion('cb_ads_association-banners', $aliasAssociation, parent::UNION_INNER)
         ->addFilter($key, $sql, PDO::PARAM_INT, $id);
 
         return $this;
@@ -83,7 +86,7 @@ class Sql extends SqlHelper implements Storage
         $statement = $this->pdo->prepare(
             "SELECT
             {$this->getFields()}
-            FROM `{$this->table}`
+            FROM `{$this->table}` AS `banners`
             WHERE {$this->generateSqlFilters()}
             {$this->generateSqlOrder()}
             LIMIT 0,1"
@@ -103,8 +106,12 @@ class Sql extends SqlHelper implements Storage
 
         $data['file'] = $this->fileStorage->addFilterById($data['file_id'])->get();
         $data['format'] = $this->formatStorage->addFilterById($data['format_id'])->get();
+        $data['link'] = $this->linkBuilder
+        ->setHref($data['link_href'])
+        ->setTarget($data['link_target'])
+        ->build();
 
-        return (new BannerBuilder)->setData($data)->build();
+        return (new BuilderFromArray)->setData($data)->build();
     }
 
     public function getAll(): Collection
@@ -112,7 +119,7 @@ class Sql extends SqlHelper implements Storage
         $statement = $this->pdo->prepare(
             "SELECT
             {$this->getFields()}
-            FROM `{$this->table}`
+            FROM `{$this->table}` AS `banners`
             WHERE {$this->generateSqlFilters()}
             {$this->generateSqlOrder()}
             {$this->generateSqlLimit()}"
@@ -140,6 +147,11 @@ class Sql extends SqlHelper implements Storage
         $builder = new BuilderFromArray;
 
         foreach ($data as $banner) {
+            $banner['link'] = $this->linkBuilder
+            ->setHref($banner['link_href'])
+            ->setTarget($banner['link_target'])
+            ->build();
+
             $collection->add(
                 $builder->setData($banner)->build()
             );
@@ -152,10 +164,9 @@ class Sql extends SqlHelper implements Storage
     {
         return '
             `banners`.`id`,
-            `banners`.`ad_id`,
             `banners`.`file_id`,
             `banners`.`format_id`,
-            `banners`.`link`,
+            `banners`.`link_href`,
             `banners`.`link_target`,
             `banners`.`views`,
             `banners`.`date_start`,
@@ -202,27 +213,26 @@ class Sql extends SqlHelper implements Storage
     {
         $statement = $this->pdo->prepare(
             "INSERT INTO `{$this->table}` (
-                `ad_id`, `file_id`,
-                `format_id`, `link`, `link_target`,
+                `file_id`, `format_id`,
+                `link_href`, `link_target`,
                 `views`, `date_start`,
                 `date_end`, `status`
             ) VALUES (
-                :ad_id, :file_id,
-                :format_id, :link, :link_target,
+                :file_id, :format_id,
+                :link_href, :link_target,
                 :views, :date_start,
                 :date_end, :status
             )"
         );
 
-        $statement->bindValue(':ad_id', $Banner->getAdId(), PDO::PARAM_INT);
-        $statement->bindValue(':file_id', $Banner->getFile()->getId(), PDO::PARAM_INT);
-        $statement->bindValue(':format_id', $Banner->getFormat()->getId(), PDO::PARAM_INT);
-        $statement->bindValue(':link', $Banner->getLink(), PDO::PARAM_STR);
-        $statement->bindValue(':link_target', $Banner->getLink(), PDO::PARAM_STR);
-        $statement->bindValue(':views', $Banner->getViews(), PDO::PARAM_STR);
-        $statement->bindValue(':date_end', $Banner->getDateEnd()->format('Y-m-d H:i:s'), PDO::PARAM_STR);
-        $statement->bindValue(':date_start', $Banner->getDateStart()->format('Y-m-d H:i:s'), PDO::PARAM_STR);
-        $statement->bindValue(':status', $Banner->getStatus(), PDO::PARAM_INT);
+        $statement->bindValue(':file_id', $banner->getFile()->getId(), PDO::PARAM_INT);
+        $statement->bindValue(':format_id', $banner->getFormat()->getId(), PDO::PARAM_INT);
+        $statement->bindValue(':link_href', $banner->getLink()->getHref(), PDO::PARAM_STR);
+        $statement->bindValue(':link_target', $banner->getLink()->getTarget(), PDO::PARAM_STR);
+        $statement->bindValue(':views', $banner->getViews(), PDO::PARAM_STR);
+        $statement->bindValue(':date_end', $banner->getDateEnd()->format('Y-m-d H:i:s'), PDO::PARAM_STR);
+        $statement->bindValue(':date_start', $banner->getDateStart()->format('Y-m-d H:i:s'), PDO::PARAM_STR);
+        $statement->bindValue(':status', $banner->getStatus(), PDO::PARAM_INT);
 
         if ($statement->execute() == false) {
             throw new Exception('ciebit.ads.banners.storages.database.error-store', 3);
@@ -240,7 +250,7 @@ class Sql extends SqlHelper implements Storage
             SET
                 `file_id` = :file_id,
                 `format_id` = :format_id,
-                `link` = :link,
+                `link_href` = :link_href,
                 `link_target` = :link_target,
                 `views` = :views,
                 `date_start` = :date_start,
@@ -254,8 +264,8 @@ class Sql extends SqlHelper implements Storage
         $statement->bindValue(':id', $Banner->getId(), PDO::PARAM_INT);
         $statement->bindValue(':file_id', $Banner->getFile()->getId(), PDO::PARAM_INT);
         $statement->bindValue(':format_id', $Banner->getFormat()->getId(), PDO::PARAM_INT);
-        $statement->bindValue(':link', $Banner->getLink(), PDO::PARAM_STR);
-        $statement->bindValue(':link_target', $Banner->getLinkTarget(), PDO::PARAM_STR);
+        $statement->bindValue(':link_href', $Banner->getLink()->getHref(), PDO::PARAM_STR);
+        $statement->bindValue(':link_target', $Banner->getLink()->getTarget(), PDO::PARAM_STR);
         $statement->bindValue(':views', $Banner->getViews(), PDO::PARAM_STR);
         $statement->bindValue(':date_end', $Banner->getDateStart()->format('Y-m-d'), PDO::PARAM_STR);
         $statement->bindValue(':date_start', $Banner->getDateEnd()->format('Y-m-d'), PDO::PARAM_STR);

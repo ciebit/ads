@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `cb_ads_banners` (
   `id`               int(5)       unsigned NOT NULL AUTO_INCREMENT,
   `file_id`          int(10)      unsigned NOT NULL,
   `format_id`        int(5)       unsigned NOT NULL,
-  `link`             varchar(300)          DEFAULT NULL,
+  `link_href`        varchar(300)          DEFAULT NULL,
   `link_target`      varchar(10)           DEFAULT NULL,
   `views`            int(8)       unsigned DEFAULT 0,
   `date_start`       datetime              DEFAULT NULL,

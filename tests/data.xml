@@ -107,7 +107,7 @@
         <column>id</column>
         <column>file_id</column>
         <column>format_id</column>
-        <column>link</column>
+        <column>link_href</column>
         <column>link_target</column>
         <column>views</column>
         <column>date_start</column>

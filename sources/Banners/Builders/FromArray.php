@@ -6,8 +6,9 @@ use Ciebit\Ads\Banners\Status;
 use Ciebit\Files\File;
 use Ciebit\Ads\Formats\Format;
 use Ciebit\Ads\Formats\Builders\FromArray as FormatFactory;
+use Ciebit\Ads\Links\Link;
 use DateTime;
-use Psr\Link\LinkInterface;
+use Exception;
 
 class FromArray implements Builder
 {
@@ -22,7 +23,7 @@ class FromArray implements Builder
         $banner = new Banner(
             $this->data['file'],
             $this->data['format'],
-            new Status($this->data['status'])
+            new Status((int) $this->data['status'])
         );
 
         isset($this->data['date_end'])
@@ -36,7 +37,7 @@ class FromArray implements Builder
         && $banner->setId((int) $this->data['id']);
 
         isset($this->data['link'])
-        && $this->data['link'] instanceof LinkInterface
+        && $this->data['link'] instanceof Link
         && $banner->setLink($this->data['link']);
 
         isset($this->data['views'])

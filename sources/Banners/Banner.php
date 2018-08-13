@@ -3,9 +3,9 @@ namespace Ciebit\Ads\Banners;
 
 use Ciebit\Ads\Banners\Status;
 use Ciebit\Ads\Formats\Format;
+use Ciebit\Ads\Links\Link;
 use Ciebit\Files\File;
 use DateTime;
-use Psr\Link\LinkInterface;
 
 class Banner
 {
@@ -54,7 +54,7 @@ class Banner
         return $this->format;
     }
 
-    public function getLink(): ?LinkInterface
+    public function getLink(): ?Link
     {
         return $this->link;
     }
@@ -99,7 +99,7 @@ class Banner
         return $this;
     }
 
-    public function setLink(LinkInterface $link): self
+    public function setLink(Link $link): self
     {
         $this->link = $link;
         return $this;
