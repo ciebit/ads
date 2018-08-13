@@ -215,6 +215,12 @@ class Sql extends SqlHelper implements Storage
         return $this;
     }
 
+    public function setTableAssociation(string $name): self
+    {
+        $this->tableAssociation = $name;
+        return $this;
+    }
+
     public function store(Banner $banner): Storage
     {
         $statement = $this->pdo->prepare(
