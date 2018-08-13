@@ -40,6 +40,16 @@ class SqlTest extends Connection
         $this->assertEquals(1, $banner->getFile()->getId());
     }
 
+    public function testGetAll()
+    {
+        $storage = $this->getSql();
+        $banners = $storage->getAll();
+
+        $this->assertEquals(2, $banners->count());
+        $this->assertEquals(1, $banners->getArrayObject()->offsetGet(0)->getFormat()->getId());
+        $this->assertEquals(1, $banners->getArrayObject()->offsetGet(0)->getFile()->getId());
+    }
+
     public function pendentTestStorage()
     {
         $data = [

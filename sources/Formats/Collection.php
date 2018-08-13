@@ -36,7 +36,7 @@ class Collection implements Countable, IteratorAggregate
     {
         $iterator = $this->formats->getIterator();
 
-        foreach ($Iterator as $format) {
+        foreach ($iterator as $format) {
             if ($format->getId() == $id) {
                 return $format;
             }

@@ -179,7 +179,7 @@ class Sql extends SqlHelper implements Storage
     {
         $storage = clone $this->fileStorage;
 
-        $storage->addFilterByIds($ids);
+        $storage->addFilterByIds('=', ...$ids);
         $files = $storage->getAll();
 
         foreach ($data as $i => $banner) {

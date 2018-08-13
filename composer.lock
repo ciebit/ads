@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "acaf6fc5870d9a9833e23cbd60826d3f",
+    "content-hash": "6f120b33f809cf95421e50bd2ffc271e",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -88,16 +88,16 @@
         },
         {
             "name": "ciebit/files",
-            "version": "v0.1.0",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ciebit/files.git",
-                "reference": "ebb32c9ecf596d8f2bdf596be637215e314f2d14"
+                "reference": "71c9dd8dcf67f788666a2f049ae71e0eeab205e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ciebit/files/zipball/ebb32c9ecf596d8f2bdf596be637215e314f2d14",
-                "reference": "ebb32c9ecf596d8f2bdf596be637215e314f2d14",
+                "url": "https://api.github.com/repos/ciebit/files/zipball/71c9dd8dcf67f788666a2f049ae71e0eeab205e2",
+                "reference": "71c9dd8dcf67f788666a2f049ae71e0eeab205e2",
                 "shasum": ""
             },
             "require": {
@@ -139,7 +139,7 @@
                 "files",
                 "imagens"
             ],
-            "time": "2018-08-07T19:40:54+00:00"
+            "time": "2018-08-13T19:52:40+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
