@@ -3,8 +3,9 @@ namespace Ciebit\Ads\Banners;
 
 use ArrayIterator;
 use ArrayObject;
-use Ciebit\Ads\Banners\Banner;
 use Countable;
+use IteratorAggregate;
+use Ciebit\Ads\Banners\Banner;
 
 class Collection implements Countable, IteratorAggregate
 {
@@ -17,13 +18,18 @@ class Collection implements Countable, IteratorAggregate
 
     public function add(Banner $banner): self
     {
-        $this->bannrs->append($banner);
+        $this->banners->append($banner);
         return $this;
     }
 
     public function count(): int
     {
-        return $this->ads->count();
+        return $this->banners->count();
+    }
+
+    public function getArrayObject(): ArrayObject
+    {
+        return clone $this->banners;
     }
 
     public function getById(int $id): ?Banner
@@ -41,6 +47,6 @@ class Collection implements Countable, IteratorAggregate
 
     public function getIterator(): ArrayIterator
     {
-        return $this->ads->getIterator();
+        return $this->banners->getIterator();
     }
 }
