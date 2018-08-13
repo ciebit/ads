@@ -1,7 +1,7 @@
 --
 -- Formats
 --
-CREATE TABLE IF NOT EXISTS `cb-ads_formats` (
+CREATE TABLE IF NOT EXISTS `cb_ads_formats` (
   `id`     int(5)       unsigned NOT NULL AUTO_INCREMENT,
   `name`   varchar(100)          DEFAULT NULL,
   `width`  int(4)       unsigned NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `cb-ads_formats` (
 --
 -- Banners
 --
-CREATE TABLE IF NOT EXISTS `cb-ads_banners` (
+CREATE TABLE IF NOT EXISTS `cb_ads_banners` (
   `id`               int(5)       unsigned NOT NULL AUTO_INCREMENT,
   `file_id`          int(10)      unsigned NOT NULL,
   `format_id`        int(5)       unsigned NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `cb-ads_banners` (
 --
 -- Advertisement
 --
-CREATE TABLE IF NOT EXISTS `cb-ads` (
+CREATE TABLE IF NOT EXISTS `cb_ads` (
   `id`         int(5)       unsigned NOT NULL AUTO_INCREMENT,
   `name`       varchar(100)          DEFAULT NULL,
   `date_start` datetime              DEFAULT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `cb-ads` (
 --
 -- Advertisement Association Banners
 --
-CREATE TABLE IF NOT EXISTS `cb-ads_association-banners` (
+CREATE TABLE IF NOT EXISTS `cb_ads_association-banners` (
   `id`        int(5) unsigned NOT NULL AUTO_INCREMENT,
   `ad_id`     int(5) unsigned NOT NULL,
   `banner_id` int(5) unsigned NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `cb-ads_association-banners` (
 --
 -- Association Tags
 --
-CREATE TABLE IF NOT EXISTS `cb-ads_marcadores` (
+CREATE TABLE IF NOT EXISTS `cb_ads_marcadores` (
   `id`      int(5) unsigned NOT NULL AUTO_INCREMENT,
   `ad_id`   int(5) unsigned NOT NULL,
   `tag_id`  int(5) unsigned NOT NULL,
