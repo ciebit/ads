@@ -2,6 +2,7 @@
 namespace Ciebit\Ads\Banners\Builders;
 
 use Ciebit\Ads\Banners\Banner;
+use Ciebit\Ads\Banners\Status;
 use Ciebit\Files\File;
 use Ciebit\Ads\Formats\Format;
 use Ciebit\Ads\Formats\Builders\FromArray as FormatFactory;
@@ -25,10 +26,10 @@ class FromArray implements Builder
         );
 
         isset($this->data['date_end'])
-        && $banner->setDateEnd(new DateTime($this->data['date_end']));
+        && $banner->setDateEnd(DateTime::createFromFormat('Y-m-d H:i:s', $this->data['date_end']));
 
         isset($this->data['date_start'])
-        && $banner->setDateStart(new DateTime($this->data['date_start']));
+        && $banner->setDateStart(DateTime::createFromFormat('Y-m-d H:i:s', $this->data['date_start']));
 
         isset($this->data['id'])
         && is_numeric($this->data['id'])
@@ -36,13 +37,13 @@ class FromArray implements Builder
 
         isset($this->data['link'])
         && $this->data['link'] instanceof LinkInterface
-        && $banner->setLink($this->banner['link']);
+        && $banner->setLink($this->data['link']);
 
         isset($this->data['views'])
         && is_numeric($this->data['views'])
         && $banner->setViews($this->data['views']);
 
-        return $Banner;
+        return $banner;
     }
 
     public function dataValid(): bool
@@ -58,6 +59,7 @@ class FromArray implements Builder
 
     public function setData(array $data): Builder
     {
-        return $this->data = $data;
+        $this->data = $data;
+        return $this;
     }
 }

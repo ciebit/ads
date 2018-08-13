@@ -1,6 +1,7 @@
 <?php
 namespace Ciebit\Ads\Banners;
 
+use Ciebit\Ads\Banners\Status;
 use Ciebit\Ads\Formats\Format;
 use Ciebit\Files\File;
 use DateTime;
@@ -50,7 +51,7 @@ class Banner
 
     public function getFormat(): Format
     {
-        return $this->Format;
+        return $this->format;
     }
 
     public function getLink(): ?LinkInterface
@@ -58,7 +59,7 @@ class Banner
         return $this->link;
     }
 
-    public function getStatus(): int
+    public function getStatus(): Status
     {
         return $this->status;
     }
@@ -68,15 +69,15 @@ class Banner
         return $this->views;
     }
 
-    public function setDateEnd(DateTime $date_end): self
+    public function setDateEnd(DateTime $date): self
     {
-        $this->date_end = $date_end;
+        $this->dateEnd = $date;
         return $this;
     }
 
-    public function setDateStart(DateTime $date_start): self
+    public function setDateStart(DateTime $date): self
     {
-        $this->date_start = $date_start;
+        $this->dateStart = $date;
         return $this;
     }
 
@@ -104,7 +105,7 @@ class Banner
         return $this;
     }
 
-    public function setStatus(int $status): self
+    public function setStatus(Status $status): self
     {
         $this->status = $status;
         return $this;
