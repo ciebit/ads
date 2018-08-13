@@ -1,11 +1,12 @@
 <?php
-namespace Ciebit\Ads\Factories;
+namespace Ciebit\Ads\Builders;
 
 use Ciebit\Ads\Ad;
 use Ciebit\Ads\Status;
 use Ciebit\Ads\Builders\Builder;
 use Ciebit\Ads\Banners\Collection as BannersCollection;
 use DateTime;
+use Exception;
 
 class FromArray implements Builder
 {
@@ -14,6 +15,7 @@ class FromArray implements Builder
     public function build(): Ad
     {
         if ($this->isDataValid() == false) {
+            var_dump($this->data);
             throw new Exception('ciebit.ads.builders.fromarray.data-invalid', 1);
         }
 
@@ -24,24 +26,24 @@ class FromArray implements Builder
         );
 
         isset($this->data['date_end'])
-        && $banner->setDateEnd(new DateTime($this->data['date_end']));
+        && $ad->setDateEnd(new DateTime($this->data['date_end']));
 
         isset($this->data['date_start'])
-        && $banner->setDateStart(new DateTime($this->data['date_start']));
+        && $ad->setDateStart(new DateTime($this->data['date_start']));
 
         isset($this->data['id'])
         && is_numeric($this->data['id'])
-        && $ad->setId($ad_data['id']);
+        && $ad->setId($this->data['id']);
 
         return $ad;
     }
 
-    public function isDataValid(): boolean
+    public function isDataValid(): bool
     {
         return is_array($this->data)
         && isset($this->data['name'])
         && isset($this->data['banners'])
-        && $this->data['banners'] instanceof BannersCollection
+        && ($this->data['banners'] instanceof BannersCollection)
         && isset($this->data['status'])
         && is_numeric($this->data['status']);
     }
