@@ -8,6 +8,12 @@ class Builder
     private $href; #: string
     private $target; #: string
 
+    public function __construct()
+    {
+        $this->href = '';
+        $this->target = '';
+    }
+
     public function build(): Link
     {
         return (new Link($this->href))
