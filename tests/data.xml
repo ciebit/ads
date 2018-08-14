@@ -79,6 +79,13 @@
             <value>2017-12-31 23:49:49</value>
             <value>1</value>
         </row>
+        <row>
+            <value>2</value>
+            <value>Publicidade 02</value>
+            <value>2018-01-01 07:00:00</value>
+            <value>2018-12-31 23:49:49</value>
+            <value>3</value>
+        </row>
     </table>
 
     <table name="cb_ads_formats">
@@ -135,6 +142,17 @@
             <value>2018-12-27 19:02:00</value>
             <value>1</value>
         </row>
+        <row>
+            <value>3</value>
+            <value>3</value>
+            <value>2</value>
+            <null />
+            <null />
+            <value>5</value>
+            <null />
+            <null />
+            <value>1</value>
+        </row>
     </table>
 
     <table name="cb_ads_association-banners">
@@ -150,6 +168,11 @@
             <value>2</value>
             <value>1</value>
             <value>2</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>2</value>
+            <value>3</value>
         </row>
     </table>
 </dataset>

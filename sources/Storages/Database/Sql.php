@@ -33,6 +33,15 @@ class Sql extends SqlHelper implements Storage
         return $this;
     }
 
+    public function addFilterByStatus(Status $status, string $operator = '='): Storage
+    {
+        $key = 'status';
+        $sql = "`status` $operator :{$key}";
+
+        $this->addFilter($key, $sql, PDO::PARAM_INT, $status->getValue());
+        return $this;
+    }
+
     public function delete(Ad $ad): Storage
     {
         $ad->setStatus(Status::TRASH());

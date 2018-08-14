@@ -45,7 +45,7 @@ class SqlTest extends Connection
         $storage = $this->getSql();
         $banners = $storage->getAll();
 
-        $this->assertEquals(2, $banners->count());
+        $this->assertEquals(3, $banners->count());
         $this->assertEquals(1, $banners->getArrayObject()->offsetGet(0)->getFormat()->getId());
         $this->assertEquals(1, $banners->getArrayObject()->offsetGet(0)->getFile()->getId());
     }
