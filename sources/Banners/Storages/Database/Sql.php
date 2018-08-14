@@ -112,8 +112,8 @@ class Sql extends SqlHelper implements Storage
         $data['file'] = $this->fileStorage->addFilterById($data['file_id'])->get();
         $data['format'] = $this->formatStorage->addFilterById($data['format_id'])->get();
         $data['link'] = $this->linkBuilder
-        ->setHref($data['link_href'])
-        ->setTarget($data['link_target'])
+        ->setHref((string) $data['link_href'])
+        ->setTarget((string) $data['link_target'])
         ->build();
 
         return (new BuilderFromArray)->setData($data)->build();
@@ -154,8 +154,8 @@ class Sql extends SqlHelper implements Storage
 
         foreach ($data as $banner) {
             $banner['link'] = $this->linkBuilder
-            ->setHref($banner['link_href'])
-            ->setTarget($banner['link_target'])
+            ->setHref((string) $banner['link_href'])
+            ->setTarget((string) $banner['link_target'])
             ->build();
 
             $collection->add(
