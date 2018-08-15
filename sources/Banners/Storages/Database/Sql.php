@@ -41,7 +41,7 @@ class Sql extends SqlHelper implements Storage
         $sql = "`{$aliasAssociation}`.`ad_id` $operator :{$key}";
 
         $this
-        ->addSqlUnion(
+        ->addSqlJoin(
             "INNER JOIN `{$this->tableAssociation}` AS `$aliasAssociation`
             ON `$aliasAssociation`.`banner_id` = `banners`.`id`"
         )->addFilter($key, $sql, PDO::PARAM_INT, $id);
@@ -91,7 +91,7 @@ class Sql extends SqlHelper implements Storage
             "SELECT
             {$this->getFields()}
             FROM `{$this->table}` AS `banners`
-            {$this->generateSqlUnion()}
+            {$this->generateSqlJoin()}
             WHERE {$this->generateSqlFilters()}
             {$this->generateSqlOrder()}
             LIMIT 0,1"
@@ -125,7 +125,7 @@ class Sql extends SqlHelper implements Storage
             "SELECT
             {$this->getFields()}
             FROM `{$this->table}` AS `banners`
-            {$this->generateSqlUnion()}
+            {$this->generateSqlJoin()}
             WHERE {$this->generateSqlFilters()}
             {$this->generateSqlOrder()}
             {$this->generateSqlLimit()}"

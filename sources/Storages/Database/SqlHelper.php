@@ -10,11 +10,11 @@ abstract class SqlHelper
 {
     private $bindList; #:Array
     private $filtersSql; #:Array
+    private $joinSql; #: array
     private $limit; #:int
     private $offset; #:int
     private $orderField; #:string
     private $orderDirection; #:string
-    private $unionsSql; #: array
 
     protected function addBind(string $key, int $type, $value): self
     {
@@ -39,9 +39,9 @@ abstract class SqlHelper
         return $this;
     }
 
-    protected function addSqlUnion(string $sql): self
+    protected function addSqlJoin(string $sql): self
     {
-        $this->unionsSql[] = $sql;
+        $this->joinSql[] = $sql;
         return $this;
     }
 
@@ -76,6 +76,15 @@ abstract class SqlHelper
         return $sql;
     }
 
+    protected function generateSqlJoin(): string
+    {
+        if (! is_array($this->joinSql)) {
+            return '';
+        }
+
+        return implode(' ', $this->joinSql);
+    }
+
     protected function generateSqlOrder(): string
     {
         if ($this->orderField == null) {
@@ -85,15 +94,6 @@ abstract class SqlHelper
         $direction = $this->orderDirection != null ?: 'ASC';
 
         return "ORDER BY {$this->orderField} {$direction}";
-    }
-
-    protected function generateSqlUnion(): string
-    {
-        if (! is_array($this->unionsSql)) {
-            return '';
-        }
-
-        return implode(' ', $this->unionsSql);
     }
 
     protected function setLimit(int $total): self

@@ -16,12 +16,44 @@ class Sql extends SqlHelper implements Storage
     private $bannerStorage; #: BannersStorage
     private $pdo; #: pdo
     private $table; #: string
+    private $tableAssociation; #: string
+    private $tableBanner; #: string
+    private $tableFormat; #: string
 
     public function __construct(PDO $pdo, BannersStorage $banner)
     {
         $this->bannerStorage = $banner;
         $this->pdo = $pdo;
         $this->table = 'cb_ads';
+        $this->tableAssociation = 'cb_ads_association-banners';
+        $this->tableBanner = 'cb_ads_banners';
+        $this->tableFormat = 'cb_ads_formats';
+    }
+
+    public function addFilterByFormatId(int $id, string $operator = '='): Storage
+    {
+        $key = 'format_id';
+        $formatAlias = 'format';
+        $bannerAlias = 'banner';
+        $associationAlias = 'association';
+        $sql = "`{$formatAlias}`.`id` $operator :{$key}";
+
+        $this
+        ->addSqlJoin(
+            "INNER JOIN `{$this->tableAssociation}` AS `{$associationAlias}`
+            ON `{$associationAlias}`.`ad_id` = `{$this->table}`.`id`"
+        )
+        ->addSqlJoin(
+            "INNER JOIN `{$this->tableBanner}` AS `{$bannerAlias}`
+            ON `{$bannerAlias}`.`id` = `{$associationAlias}`.`banner_id`"
+        )
+        ->addSqlJoin(
+            "INNER JOIN `{$this->tableFormat}` AS `{$formatAlias}`
+            ON `{$formatAlias}`.`id` = `{$bannerAlias}`.`format_id`"
+        )
+        ->addFilter($key, $sql, PDO::PARAM_INT, $id);
+
+        return $this;
     }
 
     public function addFilterById(int $id, string $operator = '='): Storage
@@ -71,13 +103,13 @@ class Sql extends SqlHelper implements Storage
 
     private function getFields(): string
     {
-        return '
-            `id`,
-            `name`,
-            `date_start`,
-            `date_end`,
-            `status`
-        ';
+        return "
+            `{$this->table}`.`id`,
+            `{$this->table}`.`name`,
+            `{$this->table}`.`date_start`,
+            `{$this->table}`.`date_end`,
+            `{$this->table}`.`status`
+        ";
     }
 
     public function get(): ?Ad
@@ -86,6 +118,7 @@ class Sql extends SqlHelper implements Storage
             "SELECT
             {$this->getFields()}
             FROM `{$this->table}`
+            {$this->generateSqlJoin()}
             WHERE {$this->generateSqlFilters()}
             {$this->generateSqlOrder()}
             LIMIT 0,1"
@@ -116,6 +149,7 @@ class Sql extends SqlHelper implements Storage
             "SELECT
             {$this->getFields()}
             FROM `{$this->table}`
+            {$this->generateSqlJoin()}
             WHERE {$this->generateSqlFilters()}
             {$this->generateSqlOrder()}
             {$this->generateSqlLimit()}"
