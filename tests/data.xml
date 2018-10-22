@@ -1,0 +1,222 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="cb_files">
+        <column>id</column>
+        <column>name</column>
+        <column>description</column>
+        <column>uri</column>
+        <column>extension</column>
+        <column>size</column>
+        <column>views</column>
+        <column>mimetype</column>
+        <column>date_hour</column>
+        <column>metadata</column>
+        <column>status</column>
+        <row>
+            <value>1</value>
+            <value>Title File 1</value>
+            <value>Descrição 1</value>
+            <value>title-file-1.jpg</value>
+            <value>jpg</value>
+            <value>10</value>
+            <value>0</value>
+            <value>image/jpeg</value>
+            <value>2018-05-26</value>
+            <value>{"width": 320, "height": 100}</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Title File 2</value>
+            <value>Descrição 2</value>
+            <value>title-file-2.jpg</value>
+            <value>jpg</value>
+            <value>20</value>
+            <value>1205</value>
+            <value>image/jpeg</value>
+            <value>2017-10-15</value>
+            <value>{"width": 300, "height": 300}</value>
+            <value>2</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>Title File 3</value>
+            <value>Descrição 3</value>
+            <value>title-file-3.jpg</value>
+            <value>jpg</value>
+            <value>30</value>
+            <value>100000</value>
+            <value>image/jpeg</value>
+            <value>2017-08-11</value>
+            <value>{"width": 728, "height": 90}</value>
+            <value>3</value>
+        </row>
+        <row>
+            <value>4</value>
+            <value>Title File 4</value>
+            <value>Descrição 4</value>
+            <value>title-file-4.jpg</value>
+            <value>jpg</value>
+            <value>40</value>
+            <value>5058</value>
+            <value>application/json</value>
+            <value>2017-01-19</value>
+            <value>{"width": 970, "height": 250}</value>
+            <value>4</value>
+        </row>
+    </table>
+
+    <table name="cb_ads">
+        <column>id</column>
+        <column>name</column>
+        <column>date_start</column>
+        <column>date_end</column>
+        <column>status</column>
+        <row>
+            <value>1</value>
+            <value>Publicidade 01</value>
+            <value>2017-01-01 07:00:00</value>
+            <value>2017-12-31 23:49:49</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Publicidade 02</value>
+            <value>2018-02-02 08:52:00</value>
+            <value>2018-03-03 10:42:49</value>
+            <value>2</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>Publicidade 03</value>
+            <value>2018-05-05 09:05:00</value>
+            <value>2018-10-31 23:20:39</value>
+            <value>3</value>
+        </row>
+        <row>
+            <value>4</value>
+            <value>Publicidade 04</value>
+            <value>2018-05-01 07:00:00</value>
+            <value>2018-10-31 23:49:49</value>
+            <value>4</value>
+        </row>
+    </table>
+
+    <table name="cb_ads_formats">
+        <column>id</column>
+        <column>name</column>
+        <column>width</column>
+        <column>height</column>
+        <column>status</column>
+        <row>
+            <value>1</value>
+            <value>Formato 01</value>
+            <value>320</value>
+            <value>100</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Formato 02</value>
+            <value>300</value>
+            <value>300</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>Formato 03</value>
+            <value>728</value>
+            <value>90</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>4</value>
+            <value>Formato 04</value>
+            <value>970</value>
+            <value>250</value>
+            <value>1</value>
+        </row>
+    </table>
+
+    <table name="cb_ads_banners">
+        <column>id</column>
+        <column>file_id</column>
+        <column>format_id</column>
+        <column>link_href</column>
+        <column>link_target</column>
+        <column>views</column>
+        <column>date_start</column>
+        <column>date_end</column>
+        <column>status</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>http://ciebit.com.br</value>
+            <value>_blank</value>
+            <value>0</value>
+            <value>2017-11-26 18:01:00</value>
+            <value>2018-12-27 19:02:00</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>2</value>
+            <value>2</value>
+            <value>http://ciebit.com.br</value>
+            <value>_blank</value>
+            <value>0</value>
+            <value>2017-11-28 13:11:00</value>
+            <value>2018-12-27 19:02:00</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>3</value>
+            <value>3</value>
+            <value>http://ciebit.com.br</value>
+            <value>_blank</value>
+            <value>0</value>
+            <value>2017-11-28 13:11:00</value>
+            <value>2018-12-27 19:02:00</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>4</value>
+            <value>4</value>
+            <value>4</value>
+            <value>http://ciebit.com.br</value>
+            <value>_blank</value>
+            <value>0</value>
+            <value>2017-11-28 13:11:00</value>
+            <value>2018-12-27 19:02:00</value>
+            <value>1</value>
+        </row>
+    </table>
+
+    <table name="cb_ads_association-banners">
+        <column>id</column>
+        <column>ad_id</column>
+        <column>banner_id</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>2</value>
+            <value>2</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>3</value>
+            <value>3</value>
+        </row>
+        <row>
+            <value>4</value>
+            <value>4</value>
+            <value>4</value>
+        </row>
+    </table>
+</dataset>
