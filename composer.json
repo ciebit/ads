@@ -28,7 +28,7 @@
     },
     "require": {
         "php": "^7.1",
-        "ciebit/files": "^0.2"
+        "ciebit/files": "^0.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.4",
